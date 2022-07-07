@@ -75,6 +75,7 @@
     <container size="0">subLon</container>
     <container size="0">dLat</container>
     <container size="0">dLon</container>
+    <container size="0">gt</container>
     <container size="1">startLat</container>
     <container size="1">startLon</container>
     <container size="1">diststart</container>  
@@ -170,6 +171,11 @@
       <value label="Altitude" size="1" precision="1" unit="[[unit_short_meter]]">     <!-- valore dell'altezza -->
         <input>z</input>   
       </value>
+      
+      <value label="acc. g teorica" size="1" precision="1" unit="m/s2">     <!-- valore dell'altezza -->
+        <input>gt</input>   
+      </value>
+      
       
       <value label="Altitude" size="1" precision="1" unit="m (WGS84)">
         <input>zwgs84</input>                                                         <!-- valore dell'altezza metodo WGS84 -->
@@ -308,11 +314,19 @@
     
     <formula formula="6371*acos(sin(0.01745329252*[1])*sin(0.01745329252*[3])+cos(0.01745329252*[1])*cos(0.01745329252*[3])*cos(0.01745329252*([2]-[4])))">
       <input>startLat</input>
-      <input>startLon</input>
+      <input>startLon</input>   <!-- gt acc teorica formula per calcolarla -->
       <input clear="false">lat</input>
       <input clear="false">lon</input>
       <output>diststart</output>
     </formula>
+   
+    <formula formula="9.7803184*(1+0.0(cos(0.01745329252*[1_])*[3_])^2+[2_]*[2_])*6371">
+      <input clear="false">subLat</input>
+      <input>dLat</input>
+      <input>dLon</input>
+      <output>dnew</output>
+    </formula>
+
   </analysis>
   
   <export>
